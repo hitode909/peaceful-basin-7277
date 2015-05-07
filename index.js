@@ -7,7 +7,11 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
-  response.status(200).send(String_random(".+")).end();
+  if (request.query.q) {
+    response.status(200).send(String_random(request.query.q)).end();
+  } else {
+    response.status(400).send("/?q=(Regexp)").end();
+  }
 });
 
 app.listen(app.get('port'), function() {
